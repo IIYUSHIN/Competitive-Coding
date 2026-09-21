@@ -3,20 +3,28 @@ public:
     int countPrimes(int n) {
         if (n <= 2) return 0;
         
-        vector<char> isPrime(n, 1);
+        int half = n / 2;
+        vector<char> isPrime(half, 1);
         
         int count = 1; 
-    
-        for (int i = 3; i < n; i += 2) {
+        
+        int limit = (sqrt(n) - 1) / 2;
+        int i = 1; 
+        
+        for (; i <= limit; ++i) {
             if (isPrime[i]) {
                 count++;
-         
-                if ((long long)i * i < n) {
-
-                    for (int j = i * i; j < n; j += 2 * i) {
-                        isPrime[j] = 0;
-                    }
+                
+                int p = 2 * i + 1; 
+          
+                for (int j = (1LL * p * p) / 2; j < half; j += p) {
+                    isPrime[j] = 0;
                 }
+            }
+        }
+        for (; i < half; ++i) {
+            if (isPrime[i]) {
+                count++;
             }
         }
         
